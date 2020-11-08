@@ -5,14 +5,14 @@ NOT IN USE YET
 
  */
 public class UserProfile {
+    private ProfileCreation newUser;
     private String name;
-    private int id;
     private String shoe;
 
     //constructors
 
-    public UserProfile(int id, String name, String shoe){
-        this.id = id;
+    public UserProfile(ProfileCreation newUser, String name, String shoe){
+        this.newUser = newUser;
         this.name = name;
         this.shoe = shoe;
     }
@@ -24,27 +24,29 @@ public class UserProfile {
     @Override
     public String toString() {
         return "UserProfile{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
+                "newUser=" + newUser +
+                ", name='" + name + '\'' +
                 ", shoe='" + shoe + '\'' +
                 '}';
     }
 
+
     //getters and setters
+
+    public ProfileCreation getNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(ProfileCreation newUser) {
+        this.newUser = newUser;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getShoe() {
