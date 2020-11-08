@@ -2,10 +2,14 @@ package com.example.project731;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShoeDatabaseHelper extends SQLiteOpenHelper {
 
@@ -43,5 +47,29 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
 
+    }
+
+    public List<ShoeProfileForLists> getEveryone(){
+        List<ShoeProfileForLists> returnlist = new ArrayList<>();
+
+        String queString = "SELECT * FROM " + SHOE_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queString, null);
+        if(cursor.moveToFirst()){
+            //loop throug hto create a new shoe result and put them in the lsit
+            do{
+                String shoeID = cursor.getString(0);
+                int shoePic = cursor.getInt(1);
+
+                ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID, shoePic);
+                returnlist.add(newShoe);
+            }while(cursor.moveToFirst());
+        }else{
+            //no add
+        }
+        cursor.close();
+        db.close();
+        return returnlist;
     }
 }
