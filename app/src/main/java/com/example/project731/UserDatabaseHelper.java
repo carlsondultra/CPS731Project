@@ -10,17 +10,16 @@ import androidx.annotation.Nullable;
 public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String USER_TABLE = "USER_TABLE";
-    public static final String COLUMN_ID = "ID";
     public static final String COLUMN_USER_PASSWORD = "USER_PASSWORD";
     public static final String COLUMN_USERNAME = "USERNAME";
     public UserDatabaseHelper(@Nullable Context context) {
 
-        super(context,"userbase.db", null, 1);
+        super(context,"userbaseTest.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + USER_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USERNAME + " TEXT , " + COLUMN_USER_PASSWORD + " TEXT ) " ;
+        String createTableStatement = "CREATE TABLE " + USER_TABLE + " (" + COLUMN_USERNAME + " TEXT PRIMARY KEY, " + COLUMN_USER_PASSWORD + " TEXT ) " ;
 
         db.execSQL(createTableStatement);
     }

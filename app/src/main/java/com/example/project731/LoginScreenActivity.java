@@ -31,11 +31,11 @@ public class LoginScreenActivity extends AppCompatActivity {
                 ProfileCreation newUser;
                 try {
 
-                    newUser = new ProfileCreation(-1, username_enter.getText().toString(), password_enter.getText().toString());
+                    newUser = new ProfileCreation( username_enter.getText().toString(), password_enter.getText().toString());
                     Toast.makeText(LoginScreenActivity.this, newUser.toString(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(LoginScreenActivity.this, "Error creating new account", Toast.LENGTH_SHORT).show();
-                    newUser = new ProfileCreation(-1, "error", "error");
+                    newUser = new ProfileCreation( "error", "error");
                 }
                 UserDatabaseHelper dbHelper = new UserDatabaseHelper(LoginScreenActivity.this);
 
