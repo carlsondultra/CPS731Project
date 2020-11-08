@@ -64,7 +64,7 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
 
                 ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID, shoePic);
                 returnlist.add(newShoe);
-            }while(cursor.moveToFirst());
+            }while(cursor.moveToNext());
         }else{
             //no add
         }
