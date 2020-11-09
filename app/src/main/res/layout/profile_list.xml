@@ -41,10 +41,11 @@
         app:layout_constraintStart_toEndOf="@+id/add_list"
         app:layout_constraintTop_toTopOf="@+id/add_list" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:id="@+id/shoe_list"
         android:layout_width="409dp"
         android:layout_height="615dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
