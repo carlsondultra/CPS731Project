@@ -48,6 +48,14 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
+    public boolean addTo(ShoeProfileForLists userModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+
+
+        return true;
+    }
 
     public List<ShoeProfileForLists> getEveryone(){
         List<ShoeProfileForLists> returnlist = new ArrayList<>();
