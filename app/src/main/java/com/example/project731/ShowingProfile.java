@@ -34,8 +34,6 @@ public class ShowingProfile extends AppCompatActivity {
         select_user = findViewById(R.id.profile_name);
         shoe_list = findViewById(R.id.shoe_list);
         view_profile = findViewById(R.id.user_profile);
-        view_p = false;
-        add_s = false;
         //button listener
         view_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,34 +59,53 @@ public class ShowingProfile extends AppCompatActivity {
                 shoe_list.setAdapter(shoe_listAdapt);
             }
         });
-        if(add_s != true || add_s == false) {
+
+        shoe_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ShoeProfileForLists shoe = (ShoeProfileForLists) parent.getItemAtPosition(position);
+                sHelper.deleteOne(shoe);
+                sHelper = new ShoeDatabaseHelper(ShowingProfile.this);
+                List<ShoeProfileForLists> everyone = sHelper.getEveryone();
+                shoe_listAdapt = new ArrayAdapter<ShoeProfileForLists>(ShowingProfile.this, android.R.layout.simple_list_item_1, everyone);
+                shoe_list.setAdapter(shoe_listAdapt);
+            }
+        });
+/*
+        do {
             shoe_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ShoeProfileForLists clickedShoe = (ShoeProfileForLists) parent.getItemAtPosition(position);
+
+                    UserProfile user = new UserProfile(select_user.getText().toString(), clickedShoe);
                     try {
-                        uHelper.addOne(select_user.getText().toString(), clickedShoe);
+                        uHelper.addOne(user);
                     } catch (Exception e) {
                         Toast.makeText(ShowingProfile.this, "Error adding list to non-existent user", Toast.LENGTH_SHORT).show();
                     }
 
                 }
             });
-        }else if(view_p != true || view_p == false){
+        }while(add_s && view_p == false);
+
+
+        do {
             shoe_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ShoeProfileForLists clickedShoe = (ShoeProfileForLists) parent.getItemAtPosition(position);
+                    UserProfile user = new UserProfile(select_user.getText().toString(), clickedShoe);
                     try {
-                        uHelper.deleteOne(select_user.getText().toString(), clickedShoe);
+                        uHelper.deleteOne(user);
                     } catch (Exception e) {
                         Toast.makeText(ShowingProfile.this, "Error deleting list to non-existent user", Toast.LENGTH_SHORT).show();
                     }
 
                 }
             });
-        }
-
+        }while(view_p && add_s == false);
+*/
 
        }
 }

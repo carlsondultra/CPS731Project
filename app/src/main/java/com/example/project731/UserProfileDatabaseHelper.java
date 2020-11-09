@@ -18,13 +18,13 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USERPROFILE = "USERPROFILE";
     public UserProfileDatabaseHelper(@Nullable Context context) {
 
-        super(context,"userProfileTest.db", null, 1);
+        super(context,"userProfileTest3.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         //create the table
-        String createTableStatement = "CREATE TABLE " + USERPROFILE_TABLE + " ( " + COLUMN_USERPROFILE + " ProfileCreation , " + COLUMN_USERPROFILE_SHOE + " ShoeProfileForLists UNIQUE ) " ;
+        String createTableStatement = "CREATE TABLE " + USERPROFILE_TABLE + " ( " + COLUMN_USERPROFILE + " ProfileCreation , " + COLUMN_USERPROFILE_SHOE + " ShoeProfileForLists ) " ;
 
         db.execSQL(createTableStatement);
     }
@@ -33,13 +33,13 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-    public boolean addOne(String username, ShoeProfileForLists shoe){
+    public boolean addOne(UserProfile user){
         //add to the list
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_USERPROFILE, username);
-        cv.put(COLUMN_USERPROFILE_SHOE, shoe.getShoeName());
+        cv.put(COLUMN_USERPROFILE, user.getNewUser());
+        cv.put(COLUMN_USERPROFILE_SHOE, String.valueOf(user.getShoe()));
 
         long insert = db.insert(USERPROFILE_TABLE, null, cv);
         if(insert == -1){
@@ -50,11 +50,11 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean deleteOne(String user, ShoeProfileForLists shoe){
+    public boolean deleteOne(UserProfile user){
         //delete off a list from view
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String queString = "DELETE FROM " + USERPROFILE_TABLE + " WHERE " + COLUMN_USERPROFILE_SHOE + " = " + shoe;
+        String queString = "DELETE FROM " + USERPROFILE_TABLE + " WHERE " + COLUMN_USERPROFILE + " = " + user;
 
         Cursor cursor = db.rawQuery(queString, null);
 

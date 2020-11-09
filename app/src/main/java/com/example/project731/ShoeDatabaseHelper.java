@@ -48,14 +48,18 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-    public boolean addTo(ShoeProfileForLists userModel){
+    public boolean deleteOne(ShoeProfileForLists userModel){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
+        String queString = "DELETE FROM " + SHOE_TABLE + " WHERE " + COLUMN_SHOE_PIC_TEMP + " = " + userModel.getShoePic();
 
-
-
-        return true;
+        Cursor cursor = db.rawQuery(queString, null);
+        if(cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
     }
+
 
     public List<ShoeProfileForLists> getEveryone(){
         List<ShoeProfileForLists> returnlist = new ArrayList<>();
