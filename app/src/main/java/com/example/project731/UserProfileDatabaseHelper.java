@@ -23,7 +23,8 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + USERPROFILE_TABLE + " ( " + COLUMN_USERPROFILE + " TEXT PRIMARY KEY, " + COLUMN_USERPROFILE_SHOE + " TEXT ) " ;
+        //create the table
+        String createTableStatement = "CREATE TABLE " + USERPROFILE_TABLE + " ( " + COLUMN_USERPROFILE + " ProfileCreation , " + COLUMN_USERPROFILE_SHOE + " ShoeProfileForLists UNIQUE ) " ;
 
         db.execSQL(createTableStatement);
     }
@@ -32,13 +33,13 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-    public boolean addOne(ShoeProfileForLists userModel){
-
+    public boolean addOne(String username, ShoeProfileForLists shoe){
+        //add to the list
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_USERPROFILE, userModel.getShoeName());
-        cv.put(COLUMN_USERPROFILE_SHOE, userModel.getShoePic());
+        cv.put(COLUMN_USERPROFILE, username);
+        cv.put(COLUMN_USERPROFILE_SHOE, shoe.getShoeName());
 
         long insert = db.insert(USERPROFILE_TABLE, null, cv);
         if(insert == -1){
@@ -49,7 +50,23 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean deleteOne(String user, ShoeProfileForLists shoe){
+        //delete off a list from view
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queString = "DELETE FROM " + USERPROFILE_TABLE + " WHERE " + COLUMN_USERPROFILE_SHOE + " = " + shoe;
+
+        Cursor cursor = db.rawQuery(queString, null);
+
+        if(cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
     public List<ShoeProfileForLists> getEveryone(){
+        //returnes a list to view
         List<ShoeProfileForLists> returnlist = new ArrayList<>();
 
         String queString = "SELECT * FROM " + USERPROFILE_TABLE;
