@@ -65,7 +65,7 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(queString, null);
         if(cursor.moveToFirst()){
-            //loop throug hto create a new shoe result and put them in the lsit
+            //loop through to create a new shoe result and put them in the list
             do{
                 String shoeID = cursor.getString(0);
                 int shoePic = cursor.getInt(1);

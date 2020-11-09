@@ -3,5 +3,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="UserName">Username</string>
     <string name="Login">Login</string>
-    <string name="temp"> Temporary for the local creation of hte shoe list if not made yet</string>
+    <string name="temp"> Temporary for the local creation of the shoe list if not made yet</string>
 </resources>
