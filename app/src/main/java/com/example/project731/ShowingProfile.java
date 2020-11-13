@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,7 @@ import javax.crypto.ShortBufferException;
 public class ShowingProfile extends AppCompatActivity {
     //references
     Button add_shoe, view_profile;
-    EditText select_user;
+    TextView select_user;
     ListView shoe_list;
     ArrayAdapter shoe_listAdapt;
     ShoeDatabaseHelper sHelper;
@@ -31,9 +32,11 @@ public class ShowingProfile extends AppCompatActivity {
         setContentView(R.layout.profile_list);
 
         add_shoe = findViewById(R.id.add_list);
-        select_user = findViewById(R.id.profile_name);
+        select_user =(TextView) findViewById(R.id.profile_name);
         shoe_list = findViewById(R.id.shoe_list);
         view_profile = findViewById(R.id.user_profile);
+        select_user.setText(LoginScreenActivity.user);
+        select_user.setFocusable(false);
         //button listener
         view_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +48,7 @@ public class ShowingProfile extends AppCompatActivity {
 
                 shoe_listAdapt = new ArrayAdapter<ShoeProfileForLists>(ShowingProfile.this, android.R.layout.simple_list_item_1, everyone);
                 shoe_list.setAdapter(shoe_listAdapt);
+                Toast.makeText(ShowingProfile.this, "view_p = "+view_p+" add_s = "+add_s , Toast.LENGTH_SHORT).show();
             }
         });
         add_shoe.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +61,7 @@ public class ShowingProfile extends AppCompatActivity {
 
                 shoe_listAdapt = new ArrayAdapter<ShoeProfileForLists>(ShowingProfile.this, android.R.layout.simple_list_item_1, everyone);
                 shoe_list.setAdapter(shoe_listAdapt);
+                Toast.makeText(ShowingProfile.this, "view_p = "+view_p+" add_s = "+add_s , Toast.LENGTH_SHORT).show();
             }
         });
 
