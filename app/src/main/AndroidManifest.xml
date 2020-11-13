@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FirebaseLoginActivity"></activity>
+        <activity android:name=".FirebaseMainActivity"></activity>
+        <activity android:name=".FirebaseLoginActivity" />
         <activity android:name=".FirebaseRegisterActivity" />
         <activity android:name=".Splash">
             <intent-filter>
@@ -24,15 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FirebaseLoginScreenActivity" >
+        <activity android:name=".FirebaseLoginScreenActivity">
             <intent-filter>
 
                 <!-- <action android:name="android.intent.action.MAIN" /> -->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity android:name=".LoginScreenActivity">
             <intent-filter>
 

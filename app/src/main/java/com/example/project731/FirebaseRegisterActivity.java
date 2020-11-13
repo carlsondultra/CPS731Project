@@ -3,6 +3,7 @@ package com.example.project731;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -62,6 +63,8 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(FirebaseRegisterActivity.this, "Successful register.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(FirebaseRegisterActivity.this, FirebaseMainActivity.class));
+                    finish();
                 }
                 else{
                     Toast.makeText(FirebaseRegisterActivity.this, "Unsuccessful register.", Toast.LENGTH_SHORT).show();
