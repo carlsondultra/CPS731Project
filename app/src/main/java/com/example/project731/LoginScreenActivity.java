@@ -15,6 +15,7 @@ public class LoginScreenActivity extends AppCompatActivity {
     //control references
     Button create_account, login_button, shoe_create;
     EditText username_enter, password_enter;
+    UserDatabaseHelper uHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +26,8 @@ public class LoginScreenActivity extends AppCompatActivity {
         password_enter = findViewById(R.id.password_enter);
         login_button = findViewById(R.id.login_button);
         shoe_create = findViewById(R.id.shoe_create);
+
+
 
         //button listener
         create_account.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +53,16 @@ public class LoginScreenActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginScreenActivity.this,ShowingProfile.class));
+                uHelper = new UserDatabaseHelper(LoginScreenActivity.this);
+                ProfileCreation newUser;
+                newUser = new ProfileCreation( username_enter.getText().toString(), password_enter.getText().toString());
+
+                boolean temp = uHelper.isMatching(username_enter.getText().toString(), password_enter.getText().toString());
+                if (temp){
+                    startActivity(new Intent(LoginScreenActivity.this,ShowingProfile.class));
+                }else{
+                    Toast.makeText(LoginScreenActivity.this, "Error. Password or Username do not match", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         shoe_create.setOnClickListener(new View.OnClickListener() {

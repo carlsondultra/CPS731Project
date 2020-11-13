@@ -56,12 +56,14 @@
         app:layout_constraintTop_toBottomOf="@+id/username_enter"
         app:layout_constraintVertical_bias="0.0" />
 
+
+
     <EditText
         android:id="@+id/password_enter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

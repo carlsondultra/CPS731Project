@@ -32,6 +32,7 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
     public boolean addOne(ShoeProfileForLists userModel){
 
         SQLiteDatabase db = this.getWritableDatabase();

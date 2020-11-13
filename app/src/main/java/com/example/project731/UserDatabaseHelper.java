@@ -2,6 +2,7 @@ package com.example.project731;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -28,6 +29,19 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+    public boolean isMatching(String username, String password){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("Select * from USER_TABLE where USERNAME = ? and USER_PASSWORD = ?", new String[]{username,password});
+        if(cursor.getCount() > 0 ){
+            cursor.close();
+            return true;
+        }else{
+            cursor.close();
+            return false;
+    }}
+
+
     public boolean addOne(ProfileCreation userModel){
 
         SQLiteDatabase db = this.getWritableDatabase();
