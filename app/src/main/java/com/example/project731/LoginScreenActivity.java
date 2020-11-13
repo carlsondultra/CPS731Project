@@ -15,6 +15,7 @@ public class LoginScreenActivity extends AppCompatActivity {
     //control references
     Button create_account, login_button, shoe_create;
     EditText username_enter, password_enter;
+    public static String user;
     UserDatabaseHelper uHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                 boolean temp = uHelper.isMatching(username_enter.getText().toString(), password_enter.getText().toString());
                 if (temp){
+                    user = username_enter.getText().toString();
                     startActivity(new Intent(LoginScreenActivity.this,ShowingProfile.class));
                 }else{
                     Toast.makeText(LoginScreenActivity.this, "Error. Password or Username do not match", Toast.LENGTH_SHORT).show();
