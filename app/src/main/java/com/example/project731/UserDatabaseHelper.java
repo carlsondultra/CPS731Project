@@ -32,7 +32,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     public boolean isMatching(String username, String password){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("Select * from USER_TABLE where USERNAME = ? and USER_PASSWORD = ?", new String[]{username,password});
+        Cursor cursor = db.rawQuery("Select * from " +USER_TABLE+ " where "+COLUMN_USERNAME+" = ? and "+COLUMN_USER_PASSWORD+" = ?", new String[]{username,password});
         if(cursor.getCount() > 0 ){
             cursor.close();
             return true;
