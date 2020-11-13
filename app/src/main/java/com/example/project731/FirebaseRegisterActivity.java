@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class FirebaseRegisterActivity extends AppCompatActivity {
 
     private EditText email;
-    private EditText password;
+    private EditText password,passwordConfirm;
     private Button register;
 
     private FirebaseAuth auth;
@@ -32,8 +32,9 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_register);
 
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
+        email = findViewById(R.id.email_login);
+        password = findViewById(R.id.password_first);
+        passwordConfirm = findViewById(R.id.password_confirm_box);
         register = findViewById(R.id.register);
 
         auth = FirebaseAuth.getInstance();
@@ -43,12 +44,16 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
+                String txt_password_confirm = passwordConfirm.getText().toString();
 
                 if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
                     Toast.makeText(FirebaseRegisterActivity.this, "Please fill in the empty fields.", Toast.LENGTH_SHORT).show();
                 }
                 else if (txt_password.length() < 6){
                     Toast.makeText(FirebaseRegisterActivity.this, "Password is too short.", Toast.LENGTH_SHORT).show();
+                }
+                else if(!txt_password.equals(txt_password_confirm)){
+                    Toast.makeText(FirebaseRegisterActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     registerUser(txt_email, txt_password);
@@ -67,7 +72,7 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
                     finish();
                 }
                 else{
-                    Toast.makeText(FirebaseRegisterActivity.this, "Unsuccessful register.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FirebaseRegisterActivity.this, "Unsuccessful register. Email already exists.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -1,5 +1,6 @@
 package com.example.project731;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,8 +28,8 @@ public class FirebaseLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_login);
 
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
+        email = findViewById(R.id.email_login);
+        password = findViewById(R.id.password_confirm_box);
         login = findViewById(R.id.login);
 
         auth = FirebaseAuth.getInstance();
@@ -50,6 +52,12 @@ public class FirebaseLoginActivity extends AppCompatActivity {
                 Toast.makeText(FirebaseLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(FirebaseLoginActivity.this, FirebaseMainActivity.class));
                 finish();
+            }
+        });
+        auth.signInWithEmailAndPassword(email,password).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(FirebaseLoginActivity.this, "Email or password is incorrect.", Toast.LENGTH_SHORT).show();
             }
         });
     }

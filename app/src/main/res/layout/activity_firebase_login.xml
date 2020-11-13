@@ -7,7 +7,35 @@
     tools:context=".FirebaseLoginActivity">
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/password_confirm_box"
+        android:layout_width="268dp"
+        android:layout_height="41dp"
+        android:layout_below="@id/email_login"
+        android:layout_marginTop="160dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_login"
+        app:layout_constraintVertical_bias="0.028" />
+
+    <TextView
+        android:id="@+id/password_confirm_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/password_confirm"
+        app:layout_constraintBottom_toTopOf="@+id/password_confirm_box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.241"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_login"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/email_login"
         android:layout_width="293dp"
         android:layout_height="44dp"
         android:hint="Email"
@@ -15,32 +43,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.097" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="268dp"
-        android:layout_height="41dp"
-        android:layout_below="@id/email"
-        android:layout_marginTop="160dp"
-        android:hint="Password"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.219" />
 
     <Button
         android:id="@+id/login"
         android:layout_width="309dp"
         android:layout_height="37dp"
-        android:layout_below="@id/password"
+        android:layout_below="@id/password_confirm_box"
         android:text="LOGIN"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.253" />
+        app:layout_constraintTop_toBottomOf="@+id/password_confirm_box"
+        app:layout_constraintVertical_bias="0.347" />
+
+    <TextView
+        android:id="@+id/email_enter_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:text="@string/enter_email"
+        app:layout_constraintBottom_toTopOf="@+id/email_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.174"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
