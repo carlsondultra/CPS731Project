@@ -39,7 +39,11 @@ public class FirebaseLoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
-                loginUser(txt_email, txt_password);
+                try {
+                    loginUser(txt_email, txt_password);
+                }catch(Exception e){
+                    Toast.makeText(FirebaseLoginActivity.this, "Please enter both email and password.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
