@@ -27,7 +27,7 @@ public class Splash extends AppCompatActivity {
             public void run() {
                 finish();
                 mdSong.stop();
-                startActivity(new Intent(Splash.this,LoginScreenActivity.class));
+                startActivity(new Intent(Splash.this,FirebaseLoginScreenActivity.class));
             }
         };
         //Setting timer for how long splash screen stays up
