@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class FirebaseLoginActivity extends AppCompatActivity {
 
+    public static String user;
     private EditText email;
     private EditText password;
     private Button login;
@@ -41,6 +42,7 @@ public class FirebaseLoginActivity extends AppCompatActivity {
                 String txt_password = password.getText().toString();
                 try {
                     loginUser(txt_email, txt_password);
+                    user=txt_email;
                 }catch(Exception e){
                     Toast.makeText(FirebaseLoginActivity.this, "Please enter both email and password.", Toast.LENGTH_SHORT).show();
                 }

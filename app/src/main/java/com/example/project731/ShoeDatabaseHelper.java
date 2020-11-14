@@ -18,7 +18,7 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SHOENAME = "SHOENAME";
     public ShoeDatabaseHelper(@Nullable Context context) {
 
-        super(context,"shoebaseTest.db", null, 1);
+        super(context,"shoebaseTest1.db", null, 1);
     }
 
     @Override

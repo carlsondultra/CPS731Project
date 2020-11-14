@@ -10,4 +10,6 @@
     <string name="password_confirm">Confirm password</string>
     <string name="password_type">Type password containing at least 6 characters</string>
     <string name="splash">Shoeters Shoot</string>
+    <string name="logout">Log out</string>
+    <string name="shoeListCreate">Create Shoe List</string>
 </resources>
