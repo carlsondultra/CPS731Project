@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,9 @@ public class FirebaseMainActivity extends AppCompatActivity {
     private Button logout, createShoeList, viewShoeList, viewProfile;
     private EditText edit;
     private Button add;
+    boolean addShoes;
+    UserProfileDatabaseHelper uPHelper;
+    UserProfile uprofile;
     ShoeDatabaseHelper sHelper;
     ArrayAdapter shoe_listAdapt;
     ListView shoe_list;
@@ -75,12 +79,12 @@ public class FirebaseMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ShoeProfileForLists shoe;
-                ShoeDatabaseHelper dbShoeHelper = new ShoeDatabaseHelper(FirebaseMainActivity.this);
-                boolean success2;
+                sHelper = new ShoeDatabaseHelper(FirebaseMainActivity.this);
+                Toast.makeText(FirebaseMainActivity.this, "" + addShoes, Toast.LENGTH_SHORT).show();
                 try{
                     for(int i = 0; i <11; i++){
                         shoe = new ShoeProfileForLists("Shoe "+i, i );
-                        success2 = dbShoeHelper.addOne(shoe);
+                        sHelper.addOne(shoe);
                     }
                 }catch(Exception e){
                     Toast.makeText(FirebaseMainActivity.this, "Error creating new list", Toast.LENGTH_SHORT).show();
@@ -90,6 +94,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
         viewShoeList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addShoes = true;
                 sHelper = new ShoeDatabaseHelper(FirebaseMainActivity.this);
                 List<ShoeProfileForLists> everyone = sHelper.getEveryone();
 
@@ -98,5 +103,32 @@ public class FirebaseMainActivity extends AppCompatActivity {
 
             }
         });
+        viewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addShoes = false;
+                uPHelper = new UserProfileDatabaseHelper(FirebaseMainActivity.this);
+                List<UserProfile> everyone2 = uPHelper.getEveryone(FirebaseLoginActivity.user);
+
+                shoe_listAdapt = new ArrayAdapter<UserProfile>(FirebaseMainActivity.this, android.R.layout.simple_list_item_1, everyone2);
+                shoe_list.setAdapter(shoe_listAdapt);
+            }
+        });
+
+
+
+        shoe_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(addShoes) {
+                    ShoeProfileForLists shoe = (ShoeProfileForLists) parent.getItemAtPosition(position);
+                    uPHelper = new UserProfileDatabaseHelper(FirebaseMainActivity.this);
+                    uprofile = new UserProfile(FirebaseLoginActivity.user, shoe);
+                    boolean b = uPHelper.addOne(uprofile);
+                    Toast.makeText(FirebaseMainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 }

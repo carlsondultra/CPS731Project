@@ -19,7 +19,7 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USERPROFILE = "USERPROFILE";
     public UserProfileDatabaseHelper(@Nullable Context context) {
 
-        super(context,"userProfileTest11.db", null, 1);
+        super(context,"userProfileTest12.db", null, 1);
     }
 
     @Override
