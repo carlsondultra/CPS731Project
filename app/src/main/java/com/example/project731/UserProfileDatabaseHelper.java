@@ -15,16 +15,17 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String USERPROFILE_TABLE = "USERPROFILE_TABLE";
     public static final String COLUMN_USERPROFILE_SHOE = "USERPROFILE_SHOE";
+    public static final String COLUMN_USERPROFILE_SHOEPIC = "USERPROFILE_SHOEPIC";
     public static final String COLUMN_USERPROFILE = "USERPROFILE";
     public UserProfileDatabaseHelper(@Nullable Context context) {
 
-        super(context,"userProfileTest3.db", null, 1);
+        super(context,"userProfileTest11.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         //create the table
-        String createTableStatement = "CREATE TABLE " + USERPROFILE_TABLE + " ( " + COLUMN_USERPROFILE + " ProfileCreation , " + COLUMN_USERPROFILE_SHOE + " ShoeProfileForLists ) " ;
+        String createTableStatement = "CREATE TABLE " + USERPROFILE_TABLE + " ( " + COLUMN_USERPROFILE + " TEXT , " + COLUMN_USERPROFILE_SHOE + " TEXT , " + COLUMN_USERPROFILE_SHOEPIC + " INTEGER )";
 
         db.execSQL(createTableStatement);
     }
@@ -39,7 +40,8 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_USERPROFILE, user.getNewUser());
-        cv.put(COLUMN_USERPROFILE_SHOE, String.valueOf(user.getShoe()));
+        cv.put(COLUMN_USERPROFILE_SHOE, user.getShoeName());
+        cv.put(COLUMN_USERPROFILE_SHOEPIC, user.getShoePic());
 
         long insert = db.insert(USERPROFILE_TABLE, null, cv);
         if(insert == -1){
@@ -49,6 +51,7 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
+
 
     public boolean deleteOne(UserProfile user){
         //delete off a list from view
@@ -65,9 +68,9 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-    public List<ShoeProfileForLists> getEveryone(){
+    public List<UserProfile> getEveryone(String user){
         //returnes a list to view
-        List<ShoeProfileForLists> returnlist = new ArrayList<>();
+        List<UserProfile> returnlist = new ArrayList<>();
 
         String queString = "SELECT * FROM " + USERPROFILE_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -76,11 +79,14 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             //loop throug hto create a new shoe result and put them in the lsit
             do{
-                String shoeID = cursor.getString(0);
-                int shoePic = cursor.getInt(1);
+                String email = cursor.getString(0);
+                String shoeID = cursor.getString(1);
+                int shoePic = cursor.getInt(2);
 
-                ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID, shoePic);
-                returnlist.add(newShoe);
+
+                ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID,shoePic);
+                UserProfile newProfile= new UserProfile(email, newShoe);
+                returnlist.add(newProfile);
             }while(cursor.moveToNext());
         }else{
             //no add

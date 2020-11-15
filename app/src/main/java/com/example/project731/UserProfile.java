@@ -19,9 +19,9 @@ public class UserProfile {
 
     @Override
     public String toString() {
-        return "UserProfile{" +
+        return "UserProfile{\n" +
                 "newUser=" + newUser +
-                ", shoe=" + shoe +
+                ",\n shoe=" + shoe +
                 '}';
     }
 
@@ -38,6 +38,13 @@ public class UserProfile {
 
     public ShoeProfileForLists getShoe() {
         return shoe;
+    }
+
+    public String getShoeName(){
+        return shoe.getShoeName();
+    }
+    public int getShoePic(){
+        return shoe.getShoePic();
     }
 
 

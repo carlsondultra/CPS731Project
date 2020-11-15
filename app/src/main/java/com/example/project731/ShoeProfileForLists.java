@@ -13,6 +13,10 @@ public class ShoeProfileForLists {
         this.shoePic = shoePic;
 
     }
+    public ShoeProfileForLists(String s){
+        this.shoeName = shoeName;
+        this.shoePic = shoePic;
+    }
 
     public ShoeProfileForLists(){
     }
