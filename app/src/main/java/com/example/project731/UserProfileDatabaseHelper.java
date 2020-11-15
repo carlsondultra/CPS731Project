@@ -82,11 +82,11 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
                 String email = cursor.getString(0);
                 String shoeID = cursor.getString(1);
                 int shoePic = cursor.getInt(2);
-
-
-                ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID,shoePic);
-                UserProfile newProfile= new UserProfile(email, newShoe);
-                returnlist.add(newProfile);
+                if(email.equals(user)) {
+                    ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID, shoePic);
+                    UserProfile newProfile = new UserProfile(email, newShoe);
+                    returnlist.add(newProfile);
+                }
             }while(cursor.moveToNext());
         }else{
             //no add
