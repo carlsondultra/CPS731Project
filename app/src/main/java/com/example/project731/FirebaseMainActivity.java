@@ -28,7 +28,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
     UserProfileDatabaseHelper uPHelper;
     UserProfile uprofile;
     ShoeDatabaseHelper sHelper;
-    ArrayAdapter shoe_listAdapt;
+    ShoeListAdapter shoe_listAdapt;
     ListView shoe_list;
     TextView select_user;
 
@@ -42,7 +42,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
 
         logout = findViewById(R.id.logout);
         select_user =(TextView) findViewById(R.id.profile_name2);
-        shoe_list = findViewById(R.id.shoe_list);
+        shoe_list =(ListView) findViewById(R.id.shoe_list);
         createShoeList = findViewById(R.id.shoeListCreate);
         viewShoeList = findViewById(R.id.add_list2);
         viewProfile = findViewById(R.id.user_profile2);
@@ -83,7 +83,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 Toast.makeText(FirebaseMainActivity.this, "" + addShoes, Toast.LENGTH_SHORT).show();
                 try{
                     for(int i = 0; i <11; i++){
-                        shoe = new ShoeProfileForLists("Shoe "+i, i );
+                        shoe = new ShoeProfileForLists("Shoe "+i, i , "drawable://" + R.drawable.obsidean );
                         sHelper.addOne(shoe);
                     }
                 }catch(Exception e){
@@ -98,7 +98,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 sHelper = new ShoeDatabaseHelper(FirebaseMainActivity.this);
                 List<ShoeProfileForLists> everyone = sHelper.getEveryone();
 
-                shoe_listAdapt = new ArrayAdapter<ShoeProfileForLists>(FirebaseMainActivity.this, android.R.layout.simple_list_item_1, everyone);
+                shoe_listAdapt = new ShoeListAdapter(FirebaseMainActivity.this, R.layout.adapter_view_layout, everyone);
                 shoe_list.setAdapter(shoe_listAdapt);
 
             }
@@ -110,7 +110,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 uPHelper = new UserProfileDatabaseHelper(FirebaseMainActivity.this);
                 List<UserProfile> everyone2 = uPHelper.getEveryone(FirebaseLoginActivity.user);
 
-                shoe_listAdapt = new ArrayAdapter<UserProfile>(FirebaseMainActivity.this, android.R.layout.simple_list_item_1, everyone2);
+                //shoe_listAdapt = new ShoeListAdapter(FirebaseMainActivity.this, R.layout.adapter_view_layout, everyone2);
                 shoe_list.setAdapter(shoe_listAdapt);
             }
         });

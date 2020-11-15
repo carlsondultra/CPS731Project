@@ -19,10 +19,9 @@ public class UserProfile {
 
     @Override
     public String toString() {
-        return "UserProfile{\n" +
-                "newUser=" + newUser +
-                ",\n shoe=" + shoe +
-                '}';
+        return  newUser +
+                ",\n" + shoe.getShoeName() +
+                ", " + shoe.getShoePic();
     }
 
     //getters and setters

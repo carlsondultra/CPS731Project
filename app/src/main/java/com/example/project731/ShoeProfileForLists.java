@@ -4,13 +4,15 @@ public class ShoeProfileForLists {
     private String shoeName;
     //to be replaced with a picture later
     private int shoePic;
+    private String shoeImage;
 
 
     //constructors
 
-    public ShoeProfileForLists(String shoeName, int shoePic) {
+    public ShoeProfileForLists(String shoeName, int shoePic, String shoeImage) {
         this.shoeName = shoeName;
         this.shoePic = shoePic;
+        this.shoeImage = shoeImage;
 
     }
     public ShoeProfileForLists(String s){
@@ -24,15 +26,21 @@ public class ShoeProfileForLists {
 
     @Override
     public String toString() {
-        return "ShoeProfileForLists{" +
-                "shoeName='" + shoeName + '\'' +
-                ", shoePic=" + shoePic +
-                '}';
+        return  shoeName +
+                "\n" + shoePic;
     }
 
 
     //setters and getters
 
+
+    public String getShoeImage() {
+        return shoeImage;
+    }
+
+    public void setShoeImage(String shoeImage) {
+        this.shoeImage = shoeImage;
+    }
 
     public String getShoeName() {
         return shoeName;
