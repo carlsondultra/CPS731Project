@@ -2,6 +2,7 @@ package com.example.project731;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Query;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.lang.Object;
+
 
 public class FirebaseRegisterActivity extends AppCompatActivity {
 
@@ -23,6 +28,7 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
     private Button register;
 
     private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
 
     public FirebaseRegisterActivity() {
     }
@@ -77,4 +83,6 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
