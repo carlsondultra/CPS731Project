@@ -7,17 +7,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class FirebaseMainActivity extends AppCompatActivity {
 
     private Button logout, createShoeList, viewShoeList, viewProfile;
+    private EditText edit;
+    private Button add;
     ShoeDatabaseHelper sHelper;
     ArrayAdapter shoe_listAdapt;
     ListView shoe_list;
@@ -27,6 +32,9 @@ public class FirebaseMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_main);
+
+        edit = findViewById(R.id.edit);
+        add = findViewById(R.id.add);
 
         logout = findViewById(R.id.logout);
         select_user =(TextView) findViewById(R.id.profile_name2);
@@ -45,6 +53,24 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 startActivity(new Intent(FirebaseMainActivity.this, FirebaseLoginScreenActivity.class));
             }
         });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String txt_name = edit.getText().toString();
+                if(txt_name.isEmpty()){
+                    Toast.makeText(FirebaseMainActivity.this, "No name has been entered.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    FirebaseDatabase.getInstance().getReference().child("Test").push().child("Name").setValue(txt_name);
+                }
+            }
+        });
+
+
+
+
+
         createShoeList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
