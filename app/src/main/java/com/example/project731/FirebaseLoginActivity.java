@@ -21,7 +21,7 @@ public class FirebaseLoginActivity extends AppCompatActivity {
     public static String user;
     private EditText email;
     private EditText password;
-    private Button login;
+    private Button login,back;
 
     private FirebaseAuth auth;
     FirebaseAuth.AuthStateListener firebaseAuthStateListener;
@@ -34,11 +34,17 @@ public class FirebaseLoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email_login);
         password = findViewById(R.id.password_confirm_box);
         login = findViewById(R.id.login);
+        back = findViewById(R.id.back_button);
 
         auth = FirebaseAuth.getInstance();
 
 
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FirebaseLoginActivity.this, FirebaseLoginScreenActivity.class));
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

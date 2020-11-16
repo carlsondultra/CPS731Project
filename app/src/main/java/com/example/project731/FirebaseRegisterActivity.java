@@ -25,7 +25,7 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
 
     private EditText email;
     private EditText password,passwordConfirm;
-    private Button register;
+    private Button register,back;
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
@@ -42,9 +42,16 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.password_first);
         passwordConfirm = findViewById(R.id.password_confirm_box);
         register = findViewById(R.id.register);
+        back = findViewById(R.id.back_button2);
 
         auth = FirebaseAuth.getInstance();
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FirebaseRegisterActivity.this, FirebaseLoginScreenActivity.class));
+            }
+        });
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,8 +80,8 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(FirebaseRegisterActivity.this, "Successful register.", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(FirebaseRegisterActivity.this, FirebaseMainActivity.class));
+                    Toast.makeText(FirebaseRegisterActivity.this, "Successful register. Please login with your email and password.", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(FirebaseRegisterActivity.this, FirebaseLoginActivity.class));
                     finish();
                 }
                 else{

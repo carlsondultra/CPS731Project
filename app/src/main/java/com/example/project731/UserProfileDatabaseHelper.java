@@ -21,7 +21,7 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USERPROFILE = "USERPROFILE";
     public UserProfileDatabaseHelper(@Nullable Context context) {
 
-        super(context,"userProfileTest15.db", null, 1);
+        super(context,"userProfileTest16.db", null, 1);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
                 String shoeID = cursor.getString(2);
                 String shoeImage = cursor.getString(3);
 
-                if(email.equals(user)) {
+                if(email.equals(user) && email != null) {
                     ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID,shoeImage );
                     UserProfile newProfile = new UserProfile(id,email, newShoe);
                     returnlist.add(newProfile);
