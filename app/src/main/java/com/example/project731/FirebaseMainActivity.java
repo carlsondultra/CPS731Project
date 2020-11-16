@@ -165,9 +165,26 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 if(addShoes) {
                     ShoeProfileForLists shoe = (ShoeProfileForLists) parent.getItemAtPosition(position);
                     uPHelper = new UserProfileDatabaseHelper(FirebaseMainActivity.this);
-                    uprofile = new UserProfile(FirebaseLoginActivity.user, shoe);
+                    uprofile = new UserProfile(-1,FirebaseLoginActivity.user, shoe);
                     boolean b = uPHelper.addOne(uprofile);
                     Toast.makeText(FirebaseMainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                }else{
+                    UserProfile user = (UserProfile) parent.getItemAtPosition(position);
+                    ShoeProfileForLists shoe = new ShoeProfileForLists(user.getShoeName(),user.getShoeImage());
+                    uPHelper = new UserProfileDatabaseHelper(FirebaseMainActivity.this);
+                    uprofile = new UserProfile(user.getId(),FirebaseLoginActivity.user, shoe);
+                    Toast.makeText(FirebaseMainActivity.this, " "+uprofile.getId()+"\n"+user.getId()+" "+user.getShoeName(), Toast.LENGTH_SHORT).show();
+
+                    boolean b = uPHelper.deleteOne(uprofile);
+
+                    List<UserProfile> everyone2 = uPHelper.getEveryone(FirebaseLoginActivity.user);
+
+                    profile_listAdapt = new ProfileListAdapter(FirebaseMainActivity.this, R.layout.adapter_view_layout, everyone2);
+                    shoe_list.setAdapter(profile_listAdapt);
+                    Toast.makeText(FirebaseMainActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+
+
+
                 }
             }
         });

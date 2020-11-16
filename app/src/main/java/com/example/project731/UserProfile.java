@@ -1,12 +1,14 @@
 package com.example.project731;
 
 public class UserProfile {
+    private int id;
     private String newUser;
     private ShoeProfileForLists shoe;
 
     //constructors
 
-    public UserProfile(String newUser,ShoeProfileForLists shoe){
+    public UserProfile(int id, String newUser,ShoeProfileForLists shoe){
+        this.id = id;
         this.newUser = newUser;
         this.shoe = shoe;
     }
@@ -26,6 +28,14 @@ public class UserProfile {
 
     //getters and setters
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNewUser() {
         return newUser;

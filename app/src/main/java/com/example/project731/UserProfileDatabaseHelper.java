@@ -14,18 +14,19 @@ import java.util.List;
 public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String USERPROFILE_TABLE = "USERPROFILE_TABLE";
+    public static final String COLUMN_USER_UNIQUE_ID = "USER_UID";
     public static final String COLUMN_USERPROFILE_SHOE = "USERPROFILE_SHOE";
     public static final String COLUMN_USERPROFILE_SHOEPIC = "USERPROFILE_SHOEPIC";
     public static final String COLUMN_USERPROFILE = "USERPROFILE";
     public UserProfileDatabaseHelper(@Nullable Context context) {
 
-        super(context,"userProfileTest13.db", null, 1);
+        super(context,"userProfileTest15.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         //create the table
-        String createTableStatement = "CREATE TABLE " + USERPROFILE_TABLE + " ( " + COLUMN_USERPROFILE + " TEXT , " + COLUMN_USERPROFILE_SHOE + " TEXT , " + COLUMN_USERPROFILE_SHOEPIC + " TEXT )";
+        String createTableStatement = "CREATE TABLE " + USERPROFILE_TABLE + " ("+COLUMN_USER_UNIQUE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT , " + COLUMN_USERPROFILE + " TEXT , " + COLUMN_USERPROFILE_SHOE + " TEXT , " + COLUMN_USERPROFILE_SHOEPIC + " TEXT )";
 
         db.execSQL(createTableStatement);
     }
@@ -57,7 +58,8 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
         //delete off a list from view
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String queString = "DELETE FROM " + USERPROFILE_TABLE + " WHERE " + COLUMN_USERPROFILE + " = " + user;
+        String queString = "DELETE FROM " + USERPROFILE_TABLE + " WHERE " + COLUMN_USER_UNIQUE_ID + " = " + user.getId();
+
 
         Cursor cursor = db.rawQuery(queString, null);
 
@@ -79,13 +81,14 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             //loop throug hto create a new shoe result and put them in the lsit
             do{
-                String email = cursor.getString(0);
-                String shoeID = cursor.getString(1);
-                String shoeImage = cursor.getString(2);
+                int id = cursor.getInt(0);
+                String email = cursor.getString(1);
+                String shoeID = cursor.getString(2);
+                String shoeImage = cursor.getString(3);
 
                 if(email.equals(user)) {
                     ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID,shoeImage );
-                    UserProfile newProfile = new UserProfile(email, newShoe);
+                    UserProfile newProfile = new UserProfile(id,email, newShoe);
                     returnlist.add(newProfile);
                 }
             }while(cursor.moveToNext());
