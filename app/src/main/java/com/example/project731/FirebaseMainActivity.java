@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,14 +54,37 @@ public class FirebaseMainActivity extends AppCompatActivity {
         select_user.setText(FirebaseLoginActivity.user);
         select_user.setFocusable(false);
         //button clicks
+        
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(FirebaseMainActivity.this,"You have logged out.", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(FirebaseMainActivity.this, FirebaseLoginScreenActivity.class));
+                PopupMenu popup = new PopupMenu(FirebaseMainActivity.this, logout);
+                popup.getMenuInflater().inflate(R.menu.popup_menu_main, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(FirebaseMainActivity.this, " " + item.getTooltipText(), Toast.LENGTH_SHORT).show();
+                        switch(item.getItemId()){
+                            case R.id.logout:
+                                FirebaseAuth.getInstance().signOut();
+                                Toast.makeText(FirebaseMainActivity.this,"You have logged out.", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(FirebaseMainActivity.this, FirebaseLoginScreenActivity.class));
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+
+                popup.show();
             }
         });
+
+
+
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,9 +98,6 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
 
 
         createShoeList.setOnClickListener(new View.OnClickListener() {
