@@ -19,12 +19,12 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SHOENAME = "SHOENAME";
     public ShoeDatabaseHelper(@Nullable Context context) {
 
-        super(context,"shoebaseTest2.db", null, 1);
+        super(context,"shoebaseTest4.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + SHOE_TABLE + " ( " + COLUMN_SHOENAME + " TEXT PRIMARY KEY, " + COLUMN_SHOE_PIC_TEMP + " TEXT , " + COLUMN_SHOE_PIC + " TEXT ) " ;
+        String createTableStatement = "CREATE TABLE " + SHOE_TABLE + " ( " + COLUMN_SHOENAME + " TEXT PRIMARY KEY, " +  COLUMN_SHOE_PIC + " TEXT ) " ;
 
         db.execSQL(createTableStatement);
     }
@@ -40,7 +40,7 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_SHOENAME, userModel.getShoeName());
-        cv.put(COLUMN_SHOE_PIC_TEMP, userModel.getShoePic());
+
         cv.put(COLUMN_SHOE_PIC, userModel.getShoeImage());
 
         long insert = db.insert(SHOE_TABLE, null, cv);
@@ -53,7 +53,7 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
     }
     public boolean deleteOne(ShoeProfileForLists userModel){
         SQLiteDatabase db = this.getWritableDatabase();
-        String queString = "DELETE FROM " + SHOE_TABLE + " WHERE " + COLUMN_SHOE_PIC_TEMP + " = " + userModel.getShoePic();
+        String queString = "DELETE FROM " + SHOE_TABLE + " WHERE " + COLUMN_SHOE_PIC_TEMP + " = " + userModel.getShoeName();
 
         Cursor cursor = db.rawQuery(queString, null);
         if(cursor.moveToFirst()){
@@ -75,9 +75,10 @@ public class ShoeDatabaseHelper extends SQLiteOpenHelper {
             //loop through to create a new shoe result and put them in the list
             do{
                 String shoeID = cursor.getString(0);
-                int shoePic = cursor.getInt(1);
 
-                ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID, shoePic,"drawable://" + R.drawable.obsidean);
+                String shoeImage = cursor.getString(1);
+
+                ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID, shoeImage);
                 returnlist.add(newShoe);
             }while(cursor.moveToNext());
         }else{

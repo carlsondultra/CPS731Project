@@ -21,7 +21,7 @@ public class UserProfile {
     public String toString() {
         return  newUser +
                 ",\n" + shoe.getShoeName() +
-                ", " + shoe.getShoePic();
+                ", " + shoe.getShoeImage();
     }
 
     //getters and setters
@@ -42,8 +42,8 @@ public class UserProfile {
     public String getShoeName(){
         return shoe.getShoeName();
     }
-    public int getShoePic(){
-        return shoe.getShoePic();
+    public String getShoePic(){
+        return shoe.getShoeImage();
     }
 
 

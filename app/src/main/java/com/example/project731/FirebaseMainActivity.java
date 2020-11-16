@@ -83,9 +83,50 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 Toast.makeText(FirebaseMainActivity.this, "" + addShoes, Toast.LENGTH_SHORT).show();
                 try{
                     for(int i = 0; i <11; i++){
-                        shoe = new ShoeProfileForLists("Shoe "+i, i , "drawable://" + R.drawable.obsidean );
-                        sHelper.addOne(shoe);
+                        switch(i){
+                            case 0:
+                                shoe = new ShoeProfileForLists("Off-White Jordan 1's Chicago",  "drawable://" + R.drawable.offwhitechicagos );
+                                sHelper.addOne(shoe);
+                                break;
+                            case 1:
+                                shoe = new ShoeProfileForLists("Air Max 97/1 Sean Wotherspoon",  "drawable://" + R.drawable.sean );
+                                sHelper.addOne(shoe);
+                                break;
+                            case 2:
+                                shoe = new ShoeProfileForLists("Travis Scott Jordan 1's",  "drawable://" + R.drawable.travis );
+                                sHelper.addOne(shoe);
+                                break;
+                            case 3:
+                                shoe = new ShoeProfileForLists("Air Yeezy Red Octobers",  "drawable://" + R.drawable.redoctober );
+                                sHelper.addOne(shoe);
+                                break;
+                            case 4:
+                                shoe = new ShoeProfileForLists("Air Jordan 1's Banned",  "drawable://" + R.drawable.banned );
+                                sHelper.addOne(shoe);
+                                break;
+                            case 5:
+                                shoe = new ShoeProfileForLists("Air Jordan 1's Court Purple 2.0",  "drawable://" + R.drawable.courtpurple );
+                                sHelper.addOne(shoe);
+                                break;
+                            case 6:
+                                shoe = new ShoeProfileForLists("Air Jordan 1's Obsidean",  "drawable://" + R.drawable.obsidean );
+                                sHelper.addOne(shoe);
+                                break;
+                            case 7:
+                                shoe = new ShoeProfileForLists("Air Jordan 1's Shatter Back Board 1.0",  "drawable://" + R.drawable.sbb1 );
+                                sHelper.addOne(shoe);
+                                break;
+                            case 8:
+                                shoe = new ShoeProfileForLists("Air Jordan 1's Bred Toe",  "drawable://" + R.drawable.bredtoe );
+                                sHelper.addOne(shoe);
+                                break;
+                            case 9:
+                                shoe = new ShoeProfileForLists("Air Force 1 Triple White",  "drawable://" + R.drawable.airforce1 );
+                                sHelper.addOne(shoe);
+                                break;
+                        }
                     }
+
                 }catch(Exception e){
                     Toast.makeText(FirebaseMainActivity.this, "Error creating new list", Toast.LENGTH_SHORT).show();
                 }

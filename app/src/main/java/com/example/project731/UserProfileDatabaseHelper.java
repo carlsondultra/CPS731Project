@@ -25,7 +25,7 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //create the table
-        String createTableStatement = "CREATE TABLE " + USERPROFILE_TABLE + " ( " + COLUMN_USERPROFILE + " TEXT , " + COLUMN_USERPROFILE_SHOE + " TEXT , " + COLUMN_USERPROFILE_SHOEPIC + " INTEGER )";
+        String createTableStatement = "CREATE TABLE " + USERPROFILE_TABLE + " ( " + COLUMN_USERPROFILE + " TEXT , " + COLUMN_USERPROFILE_SHOE + " TEXT , " + COLUMN_USERPROFILE_SHOEPIC + " TEXT )";
 
         db.execSQL(createTableStatement);
     }
@@ -81,9 +81,10 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
             do{
                 String email = cursor.getString(0);
                 String shoeID = cursor.getString(1);
-                int shoePic = cursor.getInt(2);
+                String shoeImage = cursor.getString(2);
+
                 if(email.equals(user)) {
-                    ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID, shoePic, "drawable://" + R.drawable.obsidean);
+                    ShoeProfileForLists newShoe = new ShoeProfileForLists(shoeID,shoeImage );
                     UserProfile newProfile = new UserProfile(email, newShoe);
                     returnlist.add(newProfile);
                 }

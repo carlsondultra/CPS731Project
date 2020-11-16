@@ -51,7 +51,6 @@ public class ShoeListAdapter extends ArrayAdapter<ShoeProfileForLists> {
         setUpImageLoader();
         //Shoe info
         String shoeName = getItem(position).getShoeName();
-        int shoePicNum = getItem(position).getShoePic();
         String shoeImage = getItem(position).getShoeImage();
 
         final View result;
@@ -62,8 +61,7 @@ public class ShoeListAdapter extends ArrayAdapter<ShoeProfileForLists> {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(mResource, parent, false);
             holder = new ViewHolder();
-            holder.shoeName = (TextView) convertView.findViewById(R.id.textView1);
-            holder.shoePicNum = (TextView) convertView.findViewById(R.id.textView3);
+            holder.shoeName = (TextView) convertView.findViewById(R.id.shoeName);
             holder.shoeImage = (ImageView) convertView.findViewById(R.id.image);
 
             result = convertView;
@@ -85,7 +83,7 @@ public class ShoeListAdapter extends ArrayAdapter<ShoeProfileForLists> {
                 .showImageOnFail(defaultImage)
                 .showImageOnLoading(defaultImage).build();
 
-
+        holder.shoeName.setText(shoeName);
         imageLoader.displayImage(shoeImage,holder.shoeImage,options);
 
         return convertView;

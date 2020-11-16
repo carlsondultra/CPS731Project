@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="50"
+        android:layout_weight="30"
         android:weightSum="100">
 
         <ImageView
@@ -22,42 +22,16 @@
             android:textStyle="bold"
             android:gravity="center"
             android:textAlignment="center"
-            android:text="Shoe name"
+
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:id="@+id/textView4"
+            android:id="@+id/shoeName"
             android:layout_weight="50"/>
 
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="33.3"
-        android:weightSum="100">
 
-        <TextView
-            android:gravity="center"
-            android:text="ShoePicNum"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:id="@+id/textView3"/>
-
-
-        <TextView
-            android:gravity="center"
-            android:textAlignment="center"
-            android:text="Shoe name"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/textView1"
-            android:layout_weight="50"
-            android:layout_below="@id/textView3"/>
-
-
-    </LinearLayout>
 
 
 
