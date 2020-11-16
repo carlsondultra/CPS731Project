@@ -42,7 +42,7 @@ public class UserProfile {
     public String getShoeName(){
         return shoe.getShoeName();
     }
-    public String getShoePic(){
+    public String getShoeImage(){
         return shoe.getShoeImage();
     }
 

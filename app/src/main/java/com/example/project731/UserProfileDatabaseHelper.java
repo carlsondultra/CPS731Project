@@ -19,7 +19,7 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USERPROFILE = "USERPROFILE";
     public UserProfileDatabaseHelper(@Nullable Context context) {
 
-        super(context,"userProfileTest12.db", null, 1);
+        super(context,"userProfileTest13.db", null, 1);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
 
         cv.put(COLUMN_USERPROFILE, user.getNewUser());
         cv.put(COLUMN_USERPROFILE_SHOE, user.getShoeName());
-        cv.put(COLUMN_USERPROFILE_SHOEPIC, user.getShoePic());
+        cv.put(COLUMN_USERPROFILE_SHOEPIC, user.getShoeImage());
 
         long insert = db.insert(USERPROFILE_TABLE, null, cv);
         if(insert == -1){

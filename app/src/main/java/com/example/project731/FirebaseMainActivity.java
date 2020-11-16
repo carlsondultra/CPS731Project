@@ -28,6 +28,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
     UserProfileDatabaseHelper uPHelper;
     UserProfile uprofile;
     ShoeDatabaseHelper sHelper;
+    ProfileListAdapter profile_listAdapt;
     ShoeListAdapter shoe_listAdapt;
     ListView shoe_list;
     TextView select_user;
@@ -151,8 +152,8 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 uPHelper = new UserProfileDatabaseHelper(FirebaseMainActivity.this);
                 List<UserProfile> everyone2 = uPHelper.getEveryone(FirebaseLoginActivity.user);
 
-                //shoe_listAdapt = new ShoeListAdapter(FirebaseMainActivity.this, R.layout.adapter_view_layout, everyone2);
-                shoe_list.setAdapter(shoe_listAdapt);
+                profile_listAdapt = new ProfileListAdapter(FirebaseMainActivity.this, R.layout.adapter_view_layout, everyone2);
+                shoe_list.setAdapter(profile_listAdapt);
             }
         });
 
