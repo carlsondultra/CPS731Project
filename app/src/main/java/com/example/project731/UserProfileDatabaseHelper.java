@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -44,6 +45,27 @@ public class UserProfileDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_USERPROFILE_SHOE, user.getShoeName());
         cv.put(COLUMN_USERPROFILE_SHOEPIC, user.getShoeImage());
 
+        String queString = "SELECT * FROM " + USERPROFILE_TABLE;
+        SQLiteDatabase db2 = this.getReadableDatabase();
+
+        Cursor cursor = db2.rawQuery(queString, null);
+        if(cursor.moveToFirst()){
+            //loop throug hto create a new shoe result and put them in the lsit
+            do{
+                int id = cursor.getInt(0);
+                String email = cursor.getString(1);
+                String shoeID = cursor.getString(2);
+                String shoeImage = cursor.getString(3);
+
+                if(email.equals(user.getNewUser())&&shoeID.equals(user.getShoeName())) {
+                    cursor.close();
+                    return false;
+                }
+            }while(cursor.moveToNext());
+        }else{
+            //no add
+        }
+        cursor.close();
         long insert = db.insert(USERPROFILE_TABLE, null, cv);
         if(insert == -1){
             return false;

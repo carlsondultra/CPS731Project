@@ -2,6 +2,7 @@ package com.example.project731;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
     ShoeListAdapter shoe_listAdapt;
     ListView shoe_list;
     TextView select_user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +169,10 @@ public class FirebaseMainActivity extends AppCompatActivity {
                     uPHelper = new UserProfileDatabaseHelper(FirebaseMainActivity.this);
                     uprofile = new UserProfile(-1,FirebaseLoginActivity.user, shoe);
                     boolean b = uPHelper.addOne(uprofile);
+                    if(b)
                     Toast.makeText(FirebaseMainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(FirebaseMainActivity.this, "Shoe is in your list already", Toast.LENGTH_SHORT).show();
                 }else{
                     UserProfile user = (UserProfile) parent.getItemAtPosition(position);
                     ShoeProfileForLists shoe = new ShoeProfileForLists(user.getShoeName(),user.getShoeImage());
