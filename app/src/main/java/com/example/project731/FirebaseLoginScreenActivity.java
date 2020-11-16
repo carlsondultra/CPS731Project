@@ -11,6 +11,7 @@ public class FirebaseLoginScreenActivity extends AppCompatActivity {
 
     private Button register;
     private Button login;
+    private Button menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,7 @@ public class FirebaseLoginScreenActivity extends AppCompatActivity {
 
         register = findViewById(R.id.register);
         login = findViewById(R.id.login);
+        menu = findViewById(R.id.menu);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +34,14 @@ public class FirebaseLoginScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(FirebaseLoginScreenActivity.this, FirebaseLoginActivity.class));
+                finish();
+            }
+        });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FirebaseLoginScreenActivity.this, FirebaseMenuActivity.class));
                 finish();
             }
         });
