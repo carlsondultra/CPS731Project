@@ -95,9 +95,12 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 }
                 else{
                     FirebaseDatabase.getInstance().getReference().child("Test").push().child("Name").setValue(txt_name);
+                    Toast.makeText(FirebaseMainActivity.this, "Name has been added!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        
 
 
         createShoeList.setOnClickListener(new View.OnClickListener() {
