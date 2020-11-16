@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/one"
+    android:title="Names"
+    android:tooltipText="We are Carlson and Branden."/>
+<item android:id="@+id/two"
+    android:title="FAQ"
+    android:tooltipText="We made this application for a 731 project."/>
+<item android:id="@+id/three"
+    android:title="Contact Us"
+    android:tooltipText="You cannot contact us."/>
+    </menu>

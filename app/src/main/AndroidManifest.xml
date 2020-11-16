@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FirebaseMainActivity"></activity>
+        <activity android:name=".FirebaseMenuActivity"></activity>
+        <activity android:name=".FirebaseMainActivity" />
         <activity android:name=".FirebaseLoginActivity" />
         <activity android:name=".FirebaseRegisterActivity" />
         <activity android:name=".Splash">
