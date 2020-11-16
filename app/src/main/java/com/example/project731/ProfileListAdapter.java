@@ -24,7 +24,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import java.util.List;
 import java.util.ArrayList;
 
-public class ShoeListAdapter extends ArrayAdapter<ShoeProfileForLists> {
+public class ProfileListAdapter extends ArrayAdapter<UserProfile> {
 
     private static final String TAG = "ShoeListAdapter";
 
@@ -38,7 +38,7 @@ public class ShoeListAdapter extends ArrayAdapter<ShoeProfileForLists> {
         ImageView shoeImage;
     }
 
-    public ShoeListAdapter(Context context, int resource, List<ShoeProfileForLists> objects){
+    public ProfileListAdapter(Context context, int resource, List<UserProfile> objects){
         super(context,resource,objects);
         mContext = context;
         mResource = resource;
