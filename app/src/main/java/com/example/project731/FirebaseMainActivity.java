@@ -100,7 +100,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
             }
         });
 
-        
+
 
 
         createShoeList.setOnClickListener(new View.OnClickListener() {

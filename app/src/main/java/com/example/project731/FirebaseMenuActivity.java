@@ -14,6 +14,7 @@ public class FirebaseMenuActivity extends AppCompatActivity {
 
     private Button back;
     private Button btnAbout;
+    private Button stores;
 
 
     @Override
@@ -23,6 +24,7 @@ public class FirebaseMenuActivity extends AppCompatActivity {
 
         back = findViewById(R.id.back);
         btnAbout = findViewById(R.id.btnAbout);
+        stores = findViewById(R.id.stores);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,5 +64,15 @@ public class FirebaseMenuActivity extends AppCompatActivity {
                 popup.show();
             }
         });
+
+        stores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FirebaseMenuActivity.this, MapsActivity.class));
+                finish();
+            }
+        });
+
+
     }
 }
