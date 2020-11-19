@@ -109,4 +109,30 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_name2"
         app:layout_constraintVertical_bias="0.506" />
 
+    <Button
+        android:id="@+id/grail_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/grail"
+        app:layout_constraintBottom_toTopOf="@+id/shoe_list"
+        app:layout_constraintEnd_toStartOf="@+id/user_profile2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/add_list2"
+        app:layout_constraintTop_toBottomOf="@+id/edit"
+        app:layout_constraintVertical_bias="0.777" />
+
+    <Button
+        android:id="@+id/match"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/match"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/logout"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/shoeListCreate"
+        app:layout_constraintTop_toBottomOf="@+id/shoe_list"
+        app:layout_constraintVertical_bias="0.441" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

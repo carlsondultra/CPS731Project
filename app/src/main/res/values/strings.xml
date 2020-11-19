@@ -12,5 +12,9 @@
     <string name="splash">Shoeters Shoot</string>
     <string name="logout">Log out</string>
     <string name="back">BACK</string>
+    <string name="grail">ADD GRAIL</string>
+    <string name="heat">HEAT</string>
+    <string name="beat">BEAT</string>
+    <string name="match">MATCH</string>
     <string name="shoeListCreate">Create Shoe List</string>
 </resources>

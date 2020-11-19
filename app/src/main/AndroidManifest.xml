@@ -19,6 +19,7 @@
         <activity android:name=".FirebaseMainActivity" />
         <activity android:name=".FirebaseLoginActivity" />
         <activity android:name=".FirebaseRegisterActivity" />
+        <activity android:name=".FirebaseMatchActivity" />
         <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,20 +28,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".FirebaseLoginScreenActivity">
-            <intent-filter>
-
-                <!-- <action android:name="android.intent.action.MAIN" /> -->
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".LoginScreenActivity">
-            <intent-filter>
-
-                <!-- <action android:name="android.intent.action.MAIN" /> -->
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ShowingProfile">
             <intent-filter>
 
                 <!-- <action android:name="android.intent.action.MAIN" /> -->

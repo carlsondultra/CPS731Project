@@ -1,6 +1,7 @@
 package com.example.project731;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Database;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
@@ -24,10 +26,10 @@ import java.util.List;
 
 public class FirebaseMainActivity extends AppCompatActivity {
 
-    private Button logout, createShoeList, viewShoeList, viewProfile;
+    private Button logout, createShoeList, viewShoeList, viewProfile,add_grail,match;
     private EditText edit;
     private Button add;
-    boolean addShoes;
+    boolean addShoes,chooseGrail;
     UserProfileDatabaseHelper uPHelper;
     UserProfile uprofile;
     ShoeDatabaseHelper sHelper;
@@ -35,6 +37,8 @@ public class FirebaseMainActivity extends AppCompatActivity {
     ShoeListAdapter shoe_listAdapt;
     ListView shoe_list;
     TextView select_user;
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
 
 
     @Override
@@ -44,6 +48,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
 
         edit = findViewById(R.id.edit);
         add = findViewById(R.id.add);
+        auth = FirebaseAuth.getInstance();
 
         logout = findViewById(R.id.logout);
         select_user =(TextView) findViewById(R.id.profile_name2);
@@ -53,6 +58,8 @@ public class FirebaseMainActivity extends AppCompatActivity {
         viewProfile = findViewById(R.id.user_profile2);
         select_user.setText(FirebaseLoginActivity.user);
         select_user.setFocusable(false);
+        add_grail = findViewById(R.id.grail_button);
+        match = findViewById(R.id.match);
         //button clicks
         
 
@@ -94,8 +101,9 @@ public class FirebaseMainActivity extends AppCompatActivity {
                     Toast.makeText(FirebaseMainActivity.this, "No name has been entered.", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    FirebaseDatabase.getInstance().getReference().child("Test").push().child("Name").setValue(txt_name);
-                    Toast.makeText(FirebaseMainActivity.this, "Name has been added!", Toast.LENGTH_SHORT).show();
+                    String userId = auth.getCurrentUser().getUid();
+                    DatabaseReference currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("name");
+                    currentUDb.setValue(txt_name);
                 }
             }
         });
@@ -160,9 +168,33 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 }
             }
         });
+        match.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userId = auth.getCurrentUser().getUid();
+                DatabaseReference currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("grail");
+                if(currentUDb.equals(null)){
+                    Toast.makeText(FirebaseMainActivity.this, "Please select a grail.", Toast.LENGTH_SHORT).show();
+                }else
+                startActivity(new Intent(FirebaseMainActivity.this, FirebaseLoginScreenActivity.class));
+            }
+        });
+        add_grail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseGrail = true;
+                addShoes = false;
+                sHelper = new ShoeDatabaseHelper(FirebaseMainActivity.this);
+                List<ShoeProfileForLists> everyone = sHelper.getEveryone();
+
+                shoe_listAdapt = new ShoeListAdapter(FirebaseMainActivity.this, R.layout.adapter_view_layout, everyone);
+                shoe_list.setAdapter(shoe_listAdapt);
+            }
+        });
         viewShoeList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chooseGrail = false;
                 addShoes = true;
                 sHelper = new ShoeDatabaseHelper(FirebaseMainActivity.this);
                 List<ShoeProfileForLists> everyone = sHelper.getEveryone();
@@ -175,6 +207,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
         viewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chooseGrail = false;
                 addShoes = false;
                 uPHelper = new UserProfileDatabaseHelper(FirebaseMainActivity.this);
                 List<UserProfile> everyone2 = uPHelper.getEveryone(FirebaseLoginActivity.user);
@@ -198,7 +231,13 @@ public class FirebaseMainActivity extends AppCompatActivity {
                     Toast.makeText(FirebaseMainActivity.this, "success", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(FirebaseMainActivity.this, "Shoe is in your list already", Toast.LENGTH_SHORT).show();
-                }else{
+                }else if(chooseGrail){
+                    ShoeProfileForLists shoe = (ShoeProfileForLists) parent.getItemAtPosition(position);
+                    String userId = auth.getCurrentUser().getUid();
+                    DatabaseReference currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("grail");
+                    currentUDb.setValue(shoe.getShoeImage());
+                }
+                else{
                     UserProfile user = (UserProfile) parent.getItemAtPosition(position);
                     ShoeProfileForLists shoe = new ShoeProfileForLists(user.getShoeName(),user.getShoeImage());
                     uPHelper = new UserProfileDatabaseHelper(FirebaseMainActivity.this);
@@ -213,11 +252,10 @@ public class FirebaseMainActivity extends AppCompatActivity {
                     shoe_list.setAdapter(profile_listAdapt);
                     Toast.makeText(FirebaseMainActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
 
-
-
                 }
             }
         });
+
 
     }
 }

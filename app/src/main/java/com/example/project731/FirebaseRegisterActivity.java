@@ -17,13 +17,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.lang.Object;
 
 
 public class FirebaseRegisterActivity extends AppCompatActivity {
 
-    private EditText email;
+    private EditText email,name1;
     private EditText password,passwordConfirm;
     private Button register,back;
 
@@ -43,6 +45,7 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
         passwordConfirm = findViewById(R.id.password_confirm_box);
         register = findViewById(R.id.register);
         back = findViewById(R.id.back_button2);
+        name1 = findViewById(R.id.name);
 
         auth = FirebaseAuth.getInstance();
 
@@ -58,6 +61,7 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
                 String txt_password_confirm = passwordConfirm.getText().toString();
+                String name = name1.getText().toString();
 
                 if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
                     Toast.makeText(FirebaseRegisterActivity.this, "Please fill in the empty fields.", Toast.LENGTH_SHORT).show();
@@ -67,20 +71,26 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
                 }
                 else if(!txt_password.equals(txt_password_confirm)){
                     Toast.makeText(FirebaseRegisterActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
+                }else if(name.equals(null)){
+                    Toast.makeText(FirebaseRegisterActivity.this, "Enter a name please.", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    registerUser(txt_email, txt_password);
+                    registerUser(txt_email, txt_password, name);
                 }
             }
         });
+
     }
 
-    private void registerUser(String email, String password) {
+    private void registerUser(String email, String password, final String name) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(FirebaseRegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(FirebaseRegisterActivity.this, "Successful register. Please login with your email and password.", Toast.LENGTH_LONG).show();
+                    String userId = auth.getCurrentUser().getUid();
+                    DatabaseReference currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("name");
+                    currentUDb.setValue(name);
                     startActivity(new Intent(FirebaseRegisterActivity.this, FirebaseLoginActivity.class));
                     finish();
                 }
