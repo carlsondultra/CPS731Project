@@ -1,5 +1,7 @@
 package com.example.project731;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Database;
 
@@ -18,6 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -37,8 +43,11 @@ public class FirebaseMainActivity extends AppCompatActivity {
     ShoeListAdapter shoe_listAdapt;
     ListView shoe_list;
     TextView select_user;
+    DatabaseReference currentUDb;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
+    private String userSex;
+    private String oppositeSex;
 
 
     @Override
@@ -176,7 +185,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 if(currentUDb.equals(null)){
                     Toast.makeText(FirebaseMainActivity.this, "Please select a grail.", Toast.LENGTH_SHORT).show();
                 }else
-                startActivity(new Intent(FirebaseMainActivity.this, FirebaseLoginScreenActivity.class));
+                startActivity(new Intent(FirebaseMainActivity.this, FirebaseMatchActivity.class));
             }
         });
         add_grail.setOnClickListener(new View.OnClickListener() {
@@ -233,9 +242,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
                         Toast.makeText(FirebaseMainActivity.this, "Shoe is in your list already", Toast.LENGTH_SHORT).show();
                 }else if(chooseGrail){
                     ShoeProfileForLists shoe = (ShoeProfileForLists) parent.getItemAtPosition(position);
-                    String userId = auth.getCurrentUser().getUid();
-                    DatabaseReference currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("grail");
-                    currentUDb.setValue(shoe.getShoeImage());
+                    checkUser(shoe.getShoeImage());
                 }
                 else{
                     UserProfile user = (UserProfile) parent.getItemAtPosition(position);
@@ -257,5 +264,82 @@ public class FirebaseMainActivity extends AppCompatActivity {
         });
 
 
+    }
+    public void checkUser(final String shoe){
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference maledb = FirebaseDatabase.getInstance().getReference().child("Users").child("Male");
+        maledb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getKey().equals(user.getUid())){
+                    userSex = "Male";
+                    oppositeSex = "Female";
+                    setGrail(shoe);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        DatabaseReference femaledb = FirebaseDatabase.getInstance().getReference().child("Users").child("Female");
+        femaledb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getKey().equals(user.getUid())){
+                    userSex = "Female";
+                    oppositeSex = "Male";
+                    setGrail(shoe);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+    public void setGrail(final String shoe){
+        DatabaseReference oppositeSexdb = FirebaseDatabase.getInstance().getReference().child("Users").child(oppositeSex);
+        oppositeSexdb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.exists()){
+                    String userId = auth.getCurrentUser().getUid();
+                    currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userSex).child(userId).child("grail");
+                    currentUDb.setValue(shoe);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 }

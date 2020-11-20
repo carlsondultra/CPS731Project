@@ -6,10 +6,13 @@ import androidx.room.Query;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,9 +28,11 @@ import java.lang.Object;
 
 public class FirebaseRegisterActivity extends AppCompatActivity {
 
+    public static String sex;
     private EditText email,name1;
     private EditText password,passwordConfirm;
     private Button register,back;
+    private RadioGroup radioGroup;
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
@@ -46,6 +51,7 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
         register = findViewById(R.id.register);
         back = findViewById(R.id.back_button2);
         name1 = findViewById(R.id.name);
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
         auth = FirebaseAuth.getInstance();
 
@@ -58,6 +64,10 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int selectId = radioGroup.getCheckedRadioButtonId();
+
+                final RadioButton radioButton = (RadioButton) findViewById(selectId);
+                sex = radioButton.getText().toString();
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
                 String txt_password_confirm = passwordConfirm.getText().toString();
@@ -73,23 +83,25 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
                     Toast.makeText(FirebaseRegisterActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
                 }else if(name.equals(null)){
                     Toast.makeText(FirebaseRegisterActivity.this, "Enter a name please.", Toast.LENGTH_SHORT).show();
+                }else if(radioButton.getText() == null){
+                    Toast.makeText(FirebaseRegisterActivity.this, "Select male or female.", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    registerUser(txt_email, txt_password, name);
+                    registerUser(txt_email, txt_password, name, sex);
                 }
             }
         });
 
     }
 
-    private void registerUser(String email, String password, final String name) {
+    private void registerUser(String email, String password, final String name, final String sex) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(FirebaseRegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(FirebaseRegisterActivity.this, "Successful register. Please login with your email and password.", Toast.LENGTH_LONG).show();
                     String userId = auth.getCurrentUser().getUid();
-                    DatabaseReference currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("name");
+                    DatabaseReference currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(sex).child(userId).child("name");
                     currentUDb.setValue(name);
                     startActivity(new Intent(FirebaseRegisterActivity.this, FirebaseLoginActivity.class));
                     finish();
