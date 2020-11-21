@@ -37,22 +37,28 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FirebaseMatchActivity extends AppCompatActivity {
     private ArrayList<Grail> userRealName;
     private GrailListAdapter arrayAdapter;
     private String userSex;
     private String oppositeSex;
     private Grail grail;
+    private ImageView beat,heat;
+    private Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firebase_matching_cards);
         checkUser();
+        beat = findViewById(R.id.beat);
+        heat = findViewById(R.id.heat);
+        back = findViewById(R.id.back_button_match);
+        beat.setImageResource(R.drawable.beat);
+        heat.setImageResource(R.drawable.heat);
 
         userRealName = new ArrayList<>();
-
-
 
         arrayAdapter = new GrailListAdapter(this, R.layout.item, userRealName );
 
@@ -62,33 +68,22 @@ public class FirebaseMatchActivity extends AppCompatActivity {
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
-                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-                Log.d("LIST", "removed object!");
                 userRealName.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void onLeftCardExit(Object dataObject) {
-                //Do something on the left!
-                //You also have access to the original object.
-                //If you want to use it just cast it (String) dataObject
                 Toast.makeText(FirebaseMatchActivity.this, "BEAT!",Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(FirebaseMatchActivity.this, "HEAT!",Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-
             }
-
             @Override
             public void onScroll(float scrollProgressPercent) {
-
             }
         });
 
@@ -97,6 +92,12 @@ public class FirebaseMatchActivity extends AppCompatActivity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FirebaseMatchActivity.this, FirebaseMainActivity.class));
             }
         });
 
