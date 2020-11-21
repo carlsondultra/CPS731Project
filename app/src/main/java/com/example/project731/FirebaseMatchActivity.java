@@ -35,16 +35,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FirebaseMatchActivity extends AppCompatActivity {
-
-    private ArrayList<String> userRealName;
-    private ArrayAdapter<String> arrayAdapter;
-    private int i;
+    private ArrayList<Grail> userRealName;
+    private GrailListAdapter arrayAdapter;
     private String userSex;
     private String oppositeSex;
-
-
+    private Grail grail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,8 @@ public class FirebaseMatchActivity extends AppCompatActivity {
         userRealName = new ArrayList<>();
 
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, userRealName );
+
+        arrayAdapter = new GrailListAdapter(this, R.layout.item, userRealName );
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -76,10 +75,9 @@ public class FirebaseMatchActivity extends AppCompatActivity {
                 //If you want to use it just cast it (String) dataObject
                 Toast.makeText(FirebaseMatchActivity.this, "BEAT!",Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onRightCardExit(Object dataObject) {
-               Toast.makeText(FirebaseMatchActivity.this, "HEAT!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(FirebaseMatchActivity.this, "HEAT!",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -99,7 +97,6 @@ public class FirebaseMatchActivity extends AppCompatActivity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(FirebaseMatchActivity.this, "GRAIL!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -159,10 +156,16 @@ public class FirebaseMatchActivity extends AppCompatActivity {
         oppositeSexdb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-               if(snapshot.exists()){
-                   userRealName.add(snapshot.child("name").getValue().toString());
-                   arrayAdapter.notifyDataSetChanged();
-               }
+                if(snapshot.exists()){
+                    String key = snapshot.getKey();
+                    String name = snapshot.child("name").getValue().toString();
+                    String shoePic = snapshot.child("grail").getValue().toString();
+
+                    grail = new Grail(key,name,shoePic);
+                    userRealName.add(grail);
+                    arrayAdapter.notifyDataSetChanged();
+
+                }
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
