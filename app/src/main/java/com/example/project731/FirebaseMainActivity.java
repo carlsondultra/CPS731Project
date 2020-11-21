@@ -35,7 +35,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
     private Button logout, createShoeList, viewShoeList, viewProfile,add_grail,match;
     private EditText edit;
     private Button add;
-    boolean addShoes,chooseGrail;
+    boolean addShoes,chooseGrail,nameSet;
     UserProfileDatabaseHelper uPHelper;
     UserProfile uprofile;
     ShoeDatabaseHelper sHelper;
@@ -110,9 +110,8 @@ public class FirebaseMainActivity extends AppCompatActivity {
                     Toast.makeText(FirebaseMainActivity.this, "No name has been entered.", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    String userId = auth.getCurrentUser().getUid();
-                    DatabaseReference currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("name");
-                    currentUDb.setValue(txt_name);
+                    nameSet = true;
+                    checkUser(txt_name);
                 }
             }
         });
@@ -195,7 +194,16 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 addShoes = false;
                 sHelper = new ShoeDatabaseHelper(FirebaseMainActivity.this);
                 List<ShoeProfileForLists> everyone = sHelper.getEveryone();
-
+                Toast.makeText(FirebaseMainActivity.this, "Obsidean: drawable://" + R.drawable.obsidean+
+                        "\nRed oct:drawable://" + R.drawable.redoctober+
+                        "\noff white drawable://" + R.drawable.offwhitechicagos+
+                        "\nsean drawable://" + R.drawable.sean+
+                        "\ntravis drawable://" + R.drawable.travis+
+                        "\nbanned drawable://" + R.drawable.banned+
+                        "\ncourt drawable://" + R.drawable.courtpurple+
+                        "\nsbb drawable://" + R.drawable.sbb1+
+                        "\nbred drawable://" + R.drawable.bredtoe+
+                        "\naf1 drawable://" + R.drawable.airforce1,Toast.LENGTH_SHORT).show();
                 shoe_listAdapt = new ShoeListAdapter(FirebaseMainActivity.this, R.layout.adapter_view_layout, everyone);
                 shoe_list.setAdapter(shoe_listAdapt);
             }
@@ -274,7 +282,12 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 if(snapshot.getKey().equals(user.getUid())){
                     userSex = "Male";
                     oppositeSex = "Female";
-                    setGrail(shoe);
+                    if(nameSet) {
+                        setName(shoe);
+                    }
+                    else {
+                        setGrail(shoe);
+                    }
                 }
             }
 
@@ -298,7 +311,12 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 if(snapshot.getKey().equals(user.getUid())){
                     userSex = "Female";
                     oppositeSex = "Male";
-                    setGrail(shoe);
+                    if(nameSet) {
+                        setName(shoe);
+                    }
+                    else {
+                        setGrail(shoe);
+                    }
                 }
             }
 
@@ -325,6 +343,33 @@ public class FirebaseMainActivity extends AppCompatActivity {
                     String userId = auth.getCurrentUser().getUid();
                     currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userSex).child(userId).child("grail");
                     currentUDb.setValue(shoe);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+    public void setName(final String shoe){
+        DatabaseReference oppositeSexdb = FirebaseDatabase.getInstance().getReference().child("Users").child(oppositeSex);
+        oppositeSexdb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.exists()){
+                    String userId = auth.getCurrentUser().getUid();
+                    currentUDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userSex).child(userId).child("name");
+                    currentUDb.setValue(shoe);
+                    nameSet=false;
                 }
             }
 
