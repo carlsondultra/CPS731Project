@@ -35,6 +35,16 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.register)).perform(click());
     }
 
+    //Test checking if store locator works
+    @Test
+    public void storeActivityLaunch(){
+        SystemClock.sleep(5200);
+        onView(withId(R.id.menu)).perform(click());
+        onView(withId(R.id.stores)).perform(click());
+        SystemClock.sleep(1000);
+        onView(withId(R.id.back)).perform(click());
+    }
+
 
     /*
     @Test
