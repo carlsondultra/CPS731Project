@@ -105,14 +105,4 @@ public class ExampleInstrumentedTest {
         onView(withId(R.id.login)).perform(click());
         SystemClock.sleep(2000);
     }
-
-    /*
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.project731", appContext.getPackageName());
-    }
-
-     */
 }
