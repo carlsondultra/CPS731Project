@@ -83,29 +83,29 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
     }
 
 
-    public boolean registerT(){
+    public void registerT(){
 
         if (txt_email.equals("") || txt_password.equals("")){
             Toast.makeText(FirebaseRegisterActivity.this, "Please fill in the empty fields.", Toast.LENGTH_SHORT).show();
-            return false;
+
         }
         else if (txt_password.length() < 6){
             Toast.makeText(FirebaseRegisterActivity.this, "Password is too short.", Toast.LENGTH_SHORT).show();
-            return false;
+
         }
         else if(!txt_password.equals(txt_password_confirm)){
             Toast.makeText(FirebaseRegisterActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
-            return false;
+
         }else if(name2.equals("")){
             Toast.makeText(FirebaseRegisterActivity.this, "Enter a name please.", Toast.LENGTH_SHORT).show();
-            return false;
+
         }else if(radioButton == null){
             Toast.makeText(FirebaseRegisterActivity.this, "Select male or female.", Toast.LENGTH_SHORT).show();
-            return false;
+
         }
         else{
             registerUser(txt_email, txt_password, name2, sex);
-            return true;
+            
         }
     }
     public boolean registerNoToast(){
