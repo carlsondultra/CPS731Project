@@ -28,11 +28,12 @@ import java.lang.Object;
 
 public class FirebaseRegisterActivity extends AppCompatActivity {
 
-    public static String sex;
+    public static String sex,txt_email,txt_password,txt_password_confirm,name2;
     private EditText email,name1;
     private EditText password,passwordConfirm;
     private Button register,back;
     private RadioGroup radioGroup;
+    RadioButton radioButton;
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
@@ -66,35 +67,67 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int selectId = radioGroup.getCheckedRadioButtonId();
 
-                final RadioButton radioButton = (RadioButton) findViewById(selectId);
-                sex = radioButton.getText().toString();
-                String txt_email = email.getText().toString();
-                String txt_password = password.getText().toString();
-                String txt_password_confirm = passwordConfirm.getText().toString();
-                String name = name1.getText().toString();
+                radioButton = (RadioButton) findViewById(selectId);
+                if(radioButton !=null)
+                    sex = radioButton.getText().toString();
+                txt_email = email.getText().toString();
+                txt_password = password.getText().toString();
+                txt_password_confirm = passwordConfirm.getText().toString();
+                name2 = name1.getText().toString();
 
-                if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
-                    Toast.makeText(FirebaseRegisterActivity.this, "Please fill in the empty fields.", Toast.LENGTH_SHORT).show();
-                }
-                else if (txt_password.length() < 6){
-                    Toast.makeText(FirebaseRegisterActivity.this, "Password is too short.", Toast.LENGTH_SHORT).show();
-                }
-                else if(!txt_password.equals(txt_password_confirm)){
-                    Toast.makeText(FirebaseRegisterActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
-                }else if(name.equals(null)){
-                    Toast.makeText(FirebaseRegisterActivity.this, "Enter a name please.", Toast.LENGTH_SHORT).show();
-                }else if(radioButton.getText() == null){
-                    Toast.makeText(FirebaseRegisterActivity.this, "Select male or female.", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    registerUser(txt_email, txt_password, name, sex);
-                }
+
+                registerT();
             }
         });
 
     }
 
-    private void registerUser(String email, String password, final String name, final String sex) {
+
+    public boolean registerT(){
+
+        if (txt_email.equals("") || txt_password.equals("")){
+            Toast.makeText(FirebaseRegisterActivity.this, "Please fill in the empty fields.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (txt_password.length() < 6){
+            Toast.makeText(FirebaseRegisterActivity.this, "Password is too short.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(!txt_password.equals(txt_password_confirm)){
+            Toast.makeText(FirebaseRegisterActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(name2.equals("")){
+            Toast.makeText(FirebaseRegisterActivity.this, "Enter a name please.", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(radioButton == null){
+            Toast.makeText(FirebaseRegisterActivity.this, "Select male or female.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else{
+            registerUser(txt_email, txt_password, name2, sex);
+            return true;
+        }
+    }
+    public boolean registerNoToast(){
+
+        if (txt_email.equals("") || txt_password.equals("")){
+            return false;
+        }
+        else if (txt_password.length() < 6){
+            return false;
+        }
+        else if(!txt_password.equals(txt_password_confirm)){
+            return false;
+        }else if(name2.equals("")){
+            return false;
+        }else if(radioButton == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    public void registerUser(String email, String password, final String name, final String sex) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(FirebaseRegisterActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
