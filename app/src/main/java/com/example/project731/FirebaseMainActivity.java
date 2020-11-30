@@ -194,16 +194,7 @@ public class FirebaseMainActivity extends AppCompatActivity {
                 addShoes = false;
                 sHelper = new ShoeDatabaseHelper(FirebaseMainActivity.this);
                 List<ShoeProfileForLists> everyone = sHelper.getEveryone();
-                Toast.makeText(FirebaseMainActivity.this, "Obsidean: drawable://" + R.drawable.obsidean+
-                        "\nRed oct:drawable://" + R.drawable.redoctober+
-                        "\noff white drawable://" + R.drawable.offwhitechicagos+
-                        "\nsean drawable://" + R.drawable.sean+
-                        "\ntravis drawable://" + R.drawable.travis+
-                        "\nbanned drawable://" + R.drawable.banned+
-                        "\ncourt drawable://" + R.drawable.courtpurple+
-                        "\nsbb drawable://" + R.drawable.sbb1+
-                        "\nbred drawable://" + R.drawable.bredtoe+
-                        "\naf1 drawable://" + R.drawable.airforce1,Toast.LENGTH_SHORT).show();
+
                 shoe_listAdapt = new ShoeListAdapter(FirebaseMainActivity.this, R.layout.adapter_view_layout, everyone);
                 shoe_list.setAdapter(shoe_listAdapt);
             }

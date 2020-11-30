@@ -1,6 +1,12 @@
 package com.example.project731;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.*;
 
@@ -10,10 +16,19 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+    @Mock
     FirebaseRegisterActivity f = new FirebaseRegisterActivity();
-    @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    @Mock
+    private UserProfile uprofile;
+
+    @Mock
+    private ShoeProfileForLists shoe;
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        shoe = new ShoeProfileForLists("Off-White Jordan 1's Chicago",  "drawable://" + R.drawable.offwhitechicagos );
+        uprofile = new UserProfile(-1,"testemail@test.com", shoe);;
     }
     @Test
     public void textEmpty(){
@@ -60,5 +75,22 @@ public class ExampleUnitTest {
         f.radioButton = null;
         assertEquals(false,f.registerNoToast());
     }
+    @Test
+    public void getUserProfileName(){
+        String name = "testemail@test.com";
+        assertEquals(name,uprofile.getNewUser());
+    }
+    @Test
+    public void getUserProfileShoeName(){
+        String shoeName = "Off-White Jordan 1's Chicago";
+        assertEquals(shoeName,uprofile.getShoeName());
+    }
+    @Test
+    public void getShoeProfileShoeImage(){
+        String shoeName = "drawable://" + R.drawable.offwhitechicagos;
+        assertEquals(shoeName,shoe.getShoeImage());
+    }
+
+
 
 }

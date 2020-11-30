@@ -14,16 +14,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class FirebaseLoginActivity extends AppCompatActivity {
 
     public static String user;
+    public static boolean  success;
     private EditText email;
     private EditText password;
     private Button login,back;
 
-    private FirebaseAuth auth;
+    public FirebaseAuth auth;
     FirebaseAuth.AuthStateListener firebaseAuthStateListener;
 
     @Override
@@ -59,8 +59,7 @@ public class FirebaseLoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void loginUser(String email, String password) {
+    public void loginUser(String email, String password) {
 
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
@@ -77,6 +76,4 @@ public class FirebaseLoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

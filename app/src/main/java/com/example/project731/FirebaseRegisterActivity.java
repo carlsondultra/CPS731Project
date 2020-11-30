@@ -105,7 +105,6 @@ public class FirebaseRegisterActivity extends AppCompatActivity {
         }
         else{
             registerUser(txt_email, txt_password, name2, sex);
-            
         }
     }
     public boolean registerNoToast(){
